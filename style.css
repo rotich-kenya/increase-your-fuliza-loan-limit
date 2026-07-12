@@ -1,0 +1,291 @@
+/* Reset & Basics */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+body{
+  background:#f4f6f8;
+  color:#333;
+}
+
+/* TOPBAR */
+.topbar{
+  background:#1fb141;
+  color:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.logo{
+  font-size:20px;
+  font-weight:bold;
+}
+.topbar a{
+  color:white;
+  margin-left:20px;
+  text-decoration:none;
+}
+
+/* HERO */
+.hero{
+  background:white;
+  text-align:center;
+  padding:25px 15px;
+  max-width:450px;
+  margin:20px auto;
+  border-radius:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+.hero h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+.hero p{
+  color:#666;
+  margin-bottom:20px;
+}
+.hero img{
+  width:100%;
+  max-width:300px;
+  height:auto;
+  display:block;
+  margin:0 auto 20px auto;
+  border-radius:20px;
+}
+.btn{
+  background:#1fb141;
+  color:white;
+  padding:12px 30px;
+  border-radius:30px;
+  text-decoration:none;
+  display:inline-block;
+}
+.btn:hover{
+  background:#169c37;
+}
+
+/* CARD */
+.card{
+  background:white;
+  margin:25px;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* TABLES */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+th{
+  background:#f1f1f1;
+  padding:14px;
+  border:1px solid #ddd;
+}
+td{
+  padding:14px;
+  border:1px solid #ddd;
+  text-align:center;
+}
+tr:nth-child(even){
+  background:#fafafa;
+}
+
+/* FAQ */
+.faq{
+  margin-top:15px;
+}
+.faq-question{
+  width:100%;
+  padding:15px;
+  border:none;
+  background:white;
+  font-weight:bold;
+  text-align:left;
+  cursor:pointer;
+  border-radius:6px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.faq-answer{
+  display:none;
+  padding:15px;
+  background:#f9f9f9;
+  border-radius:6px;
+  margin-top:5px;
+}
+
+/* FOOTER */
+footer{
+  background:#1fb141;
+  color:white;
+  text-align:center;
+  padding:15px;
+  margin-top:40px;
+}
+
+/* USER PROFILE CARD */
+.user-card{
+  max-width:650px;
+  margin:25px auto;
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  border-left:6px solid #1fb141;
+}
+.profile-icon{
+  font-size:45px;
+  background:#ecf9f0;
+  padding:15px;
+  border-radius:50%;
+}
+.user-details h3{
+  margin:0;
+  color:#1fb141;
+  font-size:22px;
+}
+.user-details p{
+  margin:6px 0;
+  color:#444;
+  font-size:14px;
+}
+.limit-box{
+  margin-top:10px;
+  background:#1fb141;
+  color:white;
+  padding:10px 15px;
+  border-radius:8px;
+  display:inline-block;
+  font-weight:bold;
+}
+
+/* SERVICE GRID */
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  padding:30px;
+  max-width:1000px;
+  margin:auto;
+}
+.service-card{
+  background:white;
+  border-radius:12px;
+  padding:25px;
+  text-align:center;
+  cursor:pointer;
+  border:2px solid #e2e2e2;
+  transition:0.3s;
+  box-shadow:0 4px 10px rgba(0,0,0,0.07);
+}
+.service-card:hover{
+  transform:translateY(-5px);
+  border-color:#1fb141;
+}
+.service-card.selected{
+  border-color:#1fb141;
+  background:#ecf9f0;
+}
+.limit{
+  font-size:22px;
+  font-weight:bold;
+  color:#1fb141;
+  margin-bottom:8px;
+}
+.fee{
+  font-size:14px;
+  color:#555;
+}
+.continue-section{
+  text-align:center;
+  margin:20px;
+  display:none;
+}
+.continue-btn{
+  background:#1fb141;
+  color:white;
+  border:none;
+  padding:14px 40px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+}
+.continue-btn:hover{
+  background:#169c37;
+}
+
+/* LOADER */
+.loader{
+  display:none;
+  text-align:center;
+  margin-top:20px;
+}
+.spinner{
+  width:50px;
+  height:50px;
+  border:5px solid #eee;
+  border-top:5px solid #1fb141;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+/* Animated Hand */
+.hand-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: -60px;
+  transform: translateX(-50%);
+}
+
+.hand {
+  width:50px;
+  height:50px;
+  animation: pointHand 1.2s infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes pointHand {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  25%  { transform: translateY(-10px) rotate(-10deg); }
+  50%  { transform: translateY(-15px) rotate(10deg); }
+  75%  { transform: translateY(-10px) rotate(-10deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+@media(max-width:600px){
+
+  .hero{
+    margin:10px;
+    padding:20px 12px;
+  }
+
+  .hero h1{
+    font-size:24px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .btn{
+    width:100%;
+    max-width:280px;
+  }
+
+  .card{
+    margin:15px 10px;
+    padding:20px;
+  }
+
+}

